@@ -39,13 +39,13 @@ import com.example.shoppinglist.ui.theme.ShoppingListTheme
 @Composable
 fun ShoppingList(modifier: Modifier  ){
     var sItems by remember {mutableStateOf(listOf<ShoppingItem>(  )) }
-    var showWin by remember { mutableStateOf(false) }
+    var showWindow by remember { mutableStateOf(false) }
     var itemName by remember { mutableStateOf("") }
     var itemQuantity by remember { mutableStateOf("1") }
     Column(modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center) {
         Button(
-            onClick = {showWin = true },
+            onClick = {showWindow = true },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
             Text("Add Item")
@@ -64,7 +64,6 @@ fun ShoppingList(modifier: Modifier  ){
                             it.quantity = editedQuantity
                         }
                     }
-
                     )
                 }else{
                     ShoppingListItem(item=item, onEditClick = {
@@ -77,8 +76,8 @@ fun ShoppingList(modifier: Modifier  ){
             }
         }
     }
-    if(showWin){
-        AlertDialog(onDismissRequest = {showWin = false},
+    if(showWindow){
+        AlertDialog(onDismissRequest = {showWindow = false},
             confirmButton = {
                 Row(modifier = modifier.fillMaxWidth().padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween) {
@@ -90,15 +89,14 @@ fun ShoppingList(modifier: Modifier  ){
                                 quantity = itemQuantity.toInt()
                             )
                             sItems = sItems + newItem
-                            showWin = false
+                            showWindow = false
                             itemName=" "
                         }
 
                     } ) {
-
                         Text("Add")
                     }
-                    Button(onClick = {showWin = false}) {
+                    Button(onClick = {showWindow = false}) {
 
                         Text("Cancel")
                     }
@@ -121,7 +119,6 @@ fun ShoppingList(modifier: Modifier  ){
             }
 
             )
-
     }
 }
 @Composable
@@ -159,13 +156,6 @@ data class ShoppingItem(val id:Int,
                        var name: String,
                        var quantity:Int,
                        var IsEditing: Boolean = false)
-@Preview(showBackground = true)
-@Composable
-fun ShoppingListPreview(){
-    ShoppingListTheme() {
-        ShoppingList(modifier = Modifier)
-    }
-}
 @Composable
 fun ShoppingListItem(
     item: ShoppingItem,
@@ -189,9 +179,6 @@ fun ShoppingListItem(
             IconButton(onClick = onDeleteClick) {
                 Icon(imageVector = Icons.Default.Delete, contentDescription = null)
             }
-
-
         }
     }
-
 }
